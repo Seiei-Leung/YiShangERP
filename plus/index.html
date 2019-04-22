@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>主页</title>
+    <link rel="stylesheet" href="../css/common.css" />
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/bscroll.min.js"></script>
+    <script src="../js/axios.js"></script>
+    <script src="../js/common.js"></script>
+</head>
+
+<body>
+    <div id="vueApp">
+        <header>
+            <div class="title">易尚 ERP</div>
+            <div class="userBtn" @click="goScan">
+                <span class="mui-icon mui-icon-person"></span>
+            </div>
+        </header>
+        <div class="contain-wrapper">
+            <div>
+                <img src="../img/logoTitle3.png" width="100%"/>
+			</div>
+			<div class="mui-content">
+                <ul class="mui-table-view mui-grid-view mui-grid-9" style="margin-top: 0px;background-color: #fff;">
+                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="border-color: #ddd">
+                    	<a href="#">
+		                    <img src="../img/8.png" width="38px"/>
+		                    <div class="mui-media-body">预警中心</div>
+		                </a>
+		            </li>
+                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="border-color: #ddd">
+                    	<a href="#">
+		                    <img src="../img/8.png" width="38px"/>
+		                    <div class="mui-media-body">订单中心</div>
+		                </a>
+		            </li>
+                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="border-color: #ddd">
+                    	<a href="#">
+		                    <img src="../img/8.png" width="38px"/>
+		                    <div class="mui-media-body">审批中心</div>
+		                </a>
+		            </li>
+                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="border-color: #ddd">
+                    	<a href="#">
+		                    <img src="../img/8.png" width="38px"/>
+		                    <div class="mui-media-body">应收应付</div>
+		                </a>
+		            </li>
+                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" style="border-color: #ddd">
+                    	<a href="#">
+		                    <img src="../img/8.png" width="38px"/>
+		                    <div class="mui-media-body">报表查询</div>
+		                </a>
+		            </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+            
+</body>
+
+</html>

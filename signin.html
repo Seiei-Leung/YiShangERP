@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>登陆</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/common.js"></script>
+		<script type="text/javascript" charset="utf-8">mui.init();</script>
+		<style type="text/css">
+			body {
+				background-color: #85d1c5;
+			}
+			.title-block {
+			}
+			.mui-input-row {
+				background-color: #fff;
+				border: 0px solid #ddd;
+			}
+			
+			.mui-btn {
+				height: 40px;
+				width: 80%;
+				border-radius: 20px;
+				font-size: 16px;
+				font-weight: bold;
+			}
+			label {
+				font-size: 14px;
+				text-align: center;
+				color: #464056;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="vueApp">
+			<div class="title-block">
+				<img src="img/logoTitle4.png" width="100%"/>
+			</div>
+			<div>
+				<div class="mui-input-row" style="border-bottom: 1px solid #ddd;">
+					<label style="color: #464056;"><span class="mui-icon mui-icon-contact"></span> 账号</label>
+					<input style="height: 46px;" v-model="userName" type="text" class="mui-input-clear" placeholder="请输入用户名">
+				</div>
+				<div class="mui-input-row">
+					<label style="color: #464056;"><span class="mui-icon mui-icon-locked"></span> 密码</label>
+					<input style="height: 46px;" v-model="userPW" type="password" class="mui-input-password" placeholder="请输入密码">
+				</div>
+				<div class="mui-button-row" style="margin: 50px 0">
+					<button type="button" id="submitBtn" class="mui-btn mui-btn-danger" @click="sumbit" data-loading-text="提交中">登 录</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>var app=new Vue( {
+	el: "#vueApp", data: {
+		userName: "admin", userPW: "123"
+	}
+	, created: function() {
+		var domready, T;
+		function plusReady() {
+			if(!window.plus || !domready) {
+				return;
+			}
+			// 检测网络
+			checkNet();
+			setInterval("checkNet()", 15000); // 每30秒检测一次网络
+/*			var userMsg=JSON.parse(plus.storage.getItem("userMsg"));
+			if(userMsg && userMsg.code) {
+				var _openw=plus.webview.create("plus/index.html", "plus/index.html", {
+					scrollIndicator: 'none', scalable: false, popGesture: 'close'
+				}
+				);
+				_openw.addEventListener('close', function(e) {
+					alert('Webview closed!');
+					_openw=null;
+				}
+				, false);
+				_openw.show("pop-in", null);
+				var ws=plus.webview.currentWebview();
+				plus.webview.close(ws);
+			}*/
+		}
+		// plus初始化后，执行 plusReady
+		if(window.plus) {
+			plusReady();
+		}
+		else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		// DOM树初始化后，执行 plusReady
+		document.addEventListener('DOMContentLoaded', function() {
+			domready=true;
+			plusReady();
+		}
+		, false);
+	}
+	, methods: {
+		sumbit: function() {
+			if(!checkNet()) {
+				return;
+			}
+			var that=this;
+			mui("#submitBtn").button('loading');
+			axios.get(APIURL + "/user/signinByGet", {
+				params: {
+					code: that.userName, pw: that.userPW
+				}
+			}
+			).then(function(res) {
+				if(res.data.status==0) {
+					plus.storage.setItem("userMsg", JSON.stringify(res.data.data));
+					goWhere("plus/index.html");
+					var _openw=plus.webview.create("plus/index.html", "plus/index.html", {
+						scrollIndicator: 'none', scalable: false, popGesture: 'close'
+					}
+					);
+					_openw.addEventListener('close', function(e) {
+						alert('Webview closed!');
+						_openw=null;
+					}
+					, false);
+					_openw.show("pop-in", null);
+					var ws=plus.webview.currentWebview();
+					plus.webview.close(ws);
+				}
+				else {
+					mui("#submitBtn").button('reset');
+					mui.alert(res.data.msg, "登陆失败", "确定", null, 'div');
+				}
+			}
+			).catch(function(err) {
+				mui("#submitBtn").button('reset');
+				mui.alert(err.request.statusText, "服务器错误", "确定", null, 'div');
+			}
+			)
+		}
+	}
+}
+
+);</script>
+
+</html>
